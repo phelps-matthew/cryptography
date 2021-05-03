@@ -11,8 +11,7 @@ Example NLTK tokenization:
 class Cipher:
     """Base class for encrypting and decrypting text."""
 
-    def __init__(self, n, text):
-        self.n = n
+    def __init__(self, text):
         self.text = text
         self.word_tokens = text.split()  # Tokenize on spaces.
         self.encrypted_text = None
@@ -49,8 +48,8 @@ class Caesar(Cipher):
 
     def __init__(self, n, text):
         assert isinstance(n, int), "Permutation n must be an integer."
-        assert 0 <= n <= 25, "Permutation n must lie in {0, ..., 25}."
-        super().__init__(n, text)
+        self.n = n % 26  # Shift integer.
+        super().__init__(text)
 
     def _encrypt(self) -> str:
         """Helper function to encrypt word tokens."""
@@ -108,9 +107,9 @@ class Unicode_Substitution(Cipher):
 
     def __init__(self, n, text):
         assert isinstance(n, int), "Permutation n must be an integer."
-        assert 0 <= n <= 65534, "Permutation n must lie in {0, ..., 25}."
-        super().__init__(n, text)
         self.max_ord = 65535
+        self.n = n % self.max_ord  # Shift integer.
+        super().__init__(text)
 
     def _encrypt(self) -> str:
         """Helper function to encrypt word tokens."""
