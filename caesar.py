@@ -25,19 +25,19 @@ class Cipher:
         """Helper function to decrypt encrypted word tokens."""
         raise NotImplementedError
 
-    def encrypt(self):
+    def encrypt(self) -> str:
         if self.encrypted_text is None:
             self.encrypted_text = self._encrypt()
         return self.encrypted_text
 
-    def decrypt(self):
+    def decrypt(self) -> str:
         if self.encrypted_text is None:
             raise RuntimeError("No encrypted text to decrypt.")
         if self.decrypted_text is None:
             self.decrypted_text = self._decrypt()
         return self.decrypted_text
 
-    def get_text(self):
+    def get_text(self) -> str:
         return self.text
 
 
